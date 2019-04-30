@@ -1,0 +1,154 @@
+To add the value of location 50 and 51h and store location in 52h and 53h
+org 0000h
+mov a,50h
+add a,51h
+mov 52h,a
+mov a,#00
+addc a,#00
+mov 53h,a
+endz
+To Substract the value of location 50 and 51h and store location in 52h and 53h
+
+org 0000h
+mov a,50h
+clr c
+subb a,51h
+mov 52h,a
+mov a,#00
+addc a,#00
+mov 53h,a
+end
+To store data in FFH into RAM memeory location 50h to 58h using indirect add mode
+org 0000h
+mov a,#0ffh
+mov r0,#50h
+mov r5,#08h
+start: mov@r0,a
+inc r0
+djnz r5,start
+end
+To add two BINARY CODED Decimal(BCD) number stored at location 60h and 61 h and store the result in BCD memory location 52h and 53h
+org 0000h
+mov a,60h
+add a,61h
+da a
+mov 52h,a
+mov a,#00
+addc a,#00
+mov 53h,a
+end
+
+To clear 10 RAM Location starting at RAM address 1000h
+org 0000h
+mov dptr,#1000h
+clr a
+mov r6,#0ah
+again : movx @dptr,a
+incdptr
+djnz r6,again
+end
+To compute 1+2+3….N(Says 15) and save them at 70h
+org 0000h
+n equ 15
+mov r0,#00
+clr a
+again: inc r0
+add a,r0
+cjne r0,#n,again
+mov 70h,a
+end
+							
+program to multiply two 8 bit number stored at location 70h and 72hh and storethe result at m emory location 52h and 53h.Assume that the leasr significant byrte of the resu;t store in low
+org 0000h
+mov a,70h
+mov b,71h
+mul ab
+mov 52h,a
+mov 53h,b
+end
+Divide content of 70h from content of 71h(70h>=71h) .store the remainder at memory loc 553h and quotient at loc 52h
+org 0000h
+mov a,70h
+mov b,71h
+div ab
+mov 52h,a
+mov 53h,b
+end
+ten 8 bit numbers are stored in internal data memeory from thrloc 50h. write a program to increrament the data
+org 0000h
+mov r0,#50h
+mov r3,#0ah
+loop1:inc @r0
+inc r0
+djnz r3,loop1
+end
+Avarge of five 8 bit number
+org 0000h
+mov 40h,#01h
+mov 41h,#02h
+mov 42h,#03h
+mov 43h,#04h
+mov 44h,#05h
+mov r0,#40h
+mov r5,#05h
+mov b,r5
+clr a
+loop: add a,@r0
+inc r0
+djnz r5,loop
+div ab
+mov 55h,a
+end
+Fine a cube of an 8bit
+org 0000h
+mov r1,#3h
+mov a,r1
+mov b,r1
+mul ab
+mov r2,b
+mov b,r1
+mul ab
+mov 50,a
+mov 51,b
+mov a,r2
+mov b,r1
+mul ab
+add a,51h
+mov 51h,a
+mov 52h,b
+mov a,#00h
+addc a,52h
+mov 52h,a
+end
+write a program to add 10 number stored from memory 500h onwards store the result of two addition to memory location 700h
+org 0000h
+mov r1,#09h
+mov dptr,#5000h
+movx a,@dptr
+l1: incdptr
+movb,a
+movx a,@dptr
+add a,b
+djnz r1,l1
+mov dptr,#7000h
+movx @dptr,a
+l2:sjmp l2
+end
+
+WRITE A PROGRAM TO COUNT THE NUMBER OF 1’S  AND 2’S OF 8 BIT DATA STORED IN LOCATION 
+
+org 0000H
+MOV DPTR, #6000H
+MOVX A, @DPTR
+MOV R0, #08
+MOV R2, #00
+MOV R3, #00
+CLR C
+BACK : RLC A
+JC NEXT 
+INC R2
+AJMP NEXT2
+NEXT : INC R3
+NEXT2 : DJNZ R0, BACK 
+END
+
